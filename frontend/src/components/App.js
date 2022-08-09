@@ -1,22 +1,40 @@
+import { useContext } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import GlobalStyles from "./GlobalStyles";
+import styled from "styled-components";
+import Home from "./Home";
+import HomePage from "./HomePage";
+import ResetPassword from "./ResetPassword";
 import Login from "../components/Login";
 import Error from "../Error";
-import Home from "./Home";
+import SearchEngine from "./SearchEngine";
+import { UserContext } from "./Contexts/UserContext";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+const App = () => {
+  const {
+    state: { user },
+  } = useContext(UserContext);
 
-function App() {
   return (
-    <div className="app">
+    <Wrapper>
+      <GlobalStyles />
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />}>
+          <Route exact path="/" element={<Home user={user} />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchEngine />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/reset" element={<ResetPassword />} />
           </Route>
           <Route exact path="*" element={<Error />} />
         </Routes>
       </Router>
-    </div>
+    </Wrapper>
   );
-}
+};
+
+const Wrapper = styled.div`
+  background: var(--bg-color);
+`;
 
 export default App;
