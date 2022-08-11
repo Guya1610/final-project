@@ -19,12 +19,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmDiTYlTjzcq4-ns8ULDPVwX4h2oH6XFw",
-  authDomain: "final-project-2042f.firebaseapp.com",
-  projectId: "final-project-2042f",
-  storageBucket: "final-project-2042f.appspot.com",
-  messagingSenderId: "875399476625",
-  appId: "1:875399476625:web:ff34ab79bf73ef3b0fd630",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -40,12 +41,15 @@ const signInWithGoogle = async () => {
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
-      await addDoc(collection(db, "users"), {
+      const newUser = {
         uid: user.uid,
         name: user.displayName,
         authProvider: "google",
         email: user.email,
-      });
+      };
+
+      await addDoc(collection(db, "users"), newUser);
+      //update user state
     }
   } catch (err) {
     console.error(err);

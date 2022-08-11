@@ -53,8 +53,8 @@ export default createGlobalStyle`
         line-height: 1em;
     } 
     h2 {
-        font-size: 1em;
-        line-height: 1em;
+        font-size: 1.5em;
+        line-height: 1.5em;
     } 
     h3 {
         font-size: 1em;
@@ -114,9 +114,13 @@ export default createGlobalStyle`
     button {
         border:none;
         background: transparent;
+        outline : 1px solid var(--font-color);
+        margin: 5px;
 
         :hover {
             cursor: pointer;
+            background: white;
+            color: black;
         }
     }
 
@@ -128,5 +132,9 @@ export default createGlobalStyle`
         text-decoration: underline;
 
         }
+    }
+
+    input {
+        color: black;
     }
 `;

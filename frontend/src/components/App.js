@@ -2,13 +2,14 @@ import { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
+import { UserContext } from "./Contexts/UserContext";
 import Home from "./Home";
 import HomePage from "./HomePage";
-import ResetPassword from "./ResetPassword";
-import Login from "../components/Login";
+import ResetPassword from "./Authentification/ResetPassword";
+import Login from "./Authentification/Login";
 import Error from "../Error";
 import SearchEngine from "./SearchEngine";
-import { UserContext } from "./Contexts/UserContext";
+import History from "./History";
 
 const App = () => {
   const {
@@ -23,6 +24,7 @@ const App = () => {
           <Route exact path="/" element={<Home user={user} />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchEngine />} />
+            <Route path="/history" element={<History />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/reset" element={<ResetPassword />} />
           </Route>

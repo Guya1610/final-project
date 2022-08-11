@@ -13,6 +13,9 @@ const Footer = () => {
             <NavLink to={"/"}>Home</NavLink>
           </li>
           <li>
+            <NavLink to={"/history"}>History</NavLink>
+          </li>
+          <li>
             <NavLink to={"/map"}>Map</NavLink>
           </li>
           <li>
@@ -57,11 +60,20 @@ const Footer = () => {
           </li>
           <li>
             <a
-              href="https://www.react-simple-maps.io/docs/getting-started/"
+              href="https://github.com/CSSEGISandData/COVID-19"
               target="_blank"
               rel="noreferrer"
             >
-              React-simple-maps
+              Center for Systems Science and Engineering (CSSE)
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.joinsherpa.com/products/travel-restrictions"
+              target="_blank"
+              rel="noreferrer"
+            >
+             Sherpa
             </a>
           </li>
         </ul>
@@ -83,6 +95,9 @@ const Wrapper = styled.div`
   align-items: flex-end;
   z-index: 999;
   padding: 20px;
+
+  width: 100%;
+  background: var(--bg-color);
 
   p {
     text-decoration: underline;
