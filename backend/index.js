@@ -3,14 +3,17 @@ const express = require("express");
 
 const PORT = 3001;
 
-var app = express();
+const app = express();
 
 app.use(express.json());
 
 app.use(require("./routes/login"));
 app.use(require("./routes/profile"));
+app.use(require("./routes/destination"));
+app.use(require("./routes/globalInformations"));
 
-// app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 const server = app.listen(PORT, function () {
   console.info("🌍 Listening on port " + server.address().port);

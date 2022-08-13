@@ -3,14 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./components/Contexts/UserContext";
+import { NewsProvider } from "./components/Contexts/NewsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <App />
-    </UserProvider>
+    <NewsProvider>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </NewsProvider>
   </React.StrictMode>
 );
 

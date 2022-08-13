@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   align-content: center;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
+  background: var(--bg-color);
   position: fixed;
   top: 0;
   z-index: 999;

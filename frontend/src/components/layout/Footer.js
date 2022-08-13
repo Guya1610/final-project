@@ -42,11 +42,11 @@ const Footer = () => {
           </li>
           <li>
             <a
-              href="https://developers.travelperk.com/docs"
+              href="https://rapidapi.com/slotixsro-slotixsro-default/api/covid-19-tracking/"
               target="_blank"
               rel="noreferrer"
             >
-              Travelperk
+              COVID-19 Tracking API
             </a>
           </li>
           <li>
