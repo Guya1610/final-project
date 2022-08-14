@@ -10,6 +10,7 @@ import Login from "./Authentification/Login";
 import Error from "../Error";
 import SearchEngine from "./SearchEngine";
 import History from "./History";
+import Map from "./Maps";
 
 const App = () => {
   const {
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchEngine />} />
             <Route path="/history" element={<History />} />
+            <Route path="/map" element={<Map />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/reset" element={<ResetPassword />} />
           </Route>

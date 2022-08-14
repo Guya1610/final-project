@@ -9,7 +9,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "set-loading": {
+    case "set-status": {
       return {
         ...state,
         status: action.status,
@@ -24,9 +24,9 @@ const reducer = (state, action) => {
 export const LocationProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setLoading = (data) => {
+  const setStatus = (data) => {
     dispatch({
-      type: "set-loading",
+      type: "set-status",
       ...data,
     });
   };
@@ -36,7 +36,7 @@ export const LocationProvider = ({ children }) => {
       value={{
         state,
         actions: {
-          setLoading,
+          setStatus,
         },
       }}
     >

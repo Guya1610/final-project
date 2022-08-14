@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import Marquee from "react-fast-marquee";
 import { useContext, useEffect } from "react";
-import { NewsContext } from "../Contexts/NewsContext";
+import { StatsContext } from "../Contexts/StatsContext";
 
 const News = () => {
   const {
-    state: { news },
-    actions: { getNews },
-  } = useContext(NewsContext);
+    state: { stats },
+    actions: { getStats },
+  } = useContext(StatsContext);
 
   useEffect(() => {
     const fetchNews = async () => {
-      return await getNews();
+      return await getStats();
     };
     fetchNews();
   }, []);
@@ -24,8 +24,8 @@ const News = () => {
         speed={1}
         loop={0}
       >
-        {news &&
-          news.map((stat) => {
+        {stats &&
+          stats.map((stat) => {
             return (
               <div key={`wrapper-${stat.Country}`}>
                 <Text key={`country-${stat.Country}`}>{stat.Country}:</Text>

@@ -24,7 +24,7 @@ const reducer = (state, action) => {
       };
     }
 
-    case "set-loading": {
+    case "set-status": {
       return {
         ...state,
         status: action.status,
@@ -53,9 +53,9 @@ export const UserProvider = ({ children }) => {
     });
   };
 
-  const setLoading = (data) => {
+  const setStatus = (data) => {
     dispatch({
-      type: "set-loading",
+      type: "set-status",
       ...data,
     });
   };
@@ -67,7 +67,7 @@ export const UserProvider = ({ children }) => {
         actions: {
           loginUser,
           logoutUser,
-          setLoading,
+          setStatus,
         },
       }}
     >

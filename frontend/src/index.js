@@ -3,17 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./components/Contexts/UserContext";
-import { NewsProvider } from "./components/Contexts/NewsContext";
+import { StatsProvider } from "./components/Contexts/StatsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <NewsProvider>
+    <StatsProvider>
       <UserProvider>
         <App />
       </UserProvider>
-    </NewsProvider>
+    </StatsProvider>
   </React.StrictMode>
 );
 
