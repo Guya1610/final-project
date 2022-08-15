@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use(require("./routes/login"));
 app.use(require("./routes/profile"));
-app.use(require("./routes/destination"));
+app.use(require("./routes/restrictions"));
 app.use(require("./routes/globalInformations"));
 
 

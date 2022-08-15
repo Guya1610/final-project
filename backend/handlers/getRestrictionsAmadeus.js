@@ -3,7 +3,7 @@ const { sendResponse } = require("../utils");
 const axios = require("axios");
 const qs = require("qs");
 
-// Api work with authorisation token provide via x-www-form -urlencoded
+// Api work with authorisation token provide via x-www-form-urlencoded
 const getToken = async () => {
   let token = null;
   const config = {
@@ -29,20 +29,48 @@ const getToken = async () => {
   return token;
 };
 
-const getRestrictions = async (req, res) => {
+const getIATACode = async (req, res) => {
   const { access_token } = await getToken();
-  console.log("acces token", access_token);
-
-  const countryCode = null;
-  const cityCode = null;
-
+  const { search } = req.params;
+  const { basesearch } = req.params;
+  console.log(basesearch);
   const config = {
-    method: "GET",
-    url: "https://test.api.amadeus.com/v2/duty-of-care/diseases/covid19-area-report?countryCode=US&cityCode=NYC&language=EN",
+    method: "get",
+    url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=${
+      basesearch === 0 ? `CITY` : `AIRPORT`
+    }&keyword=${search}`,
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   };
+  await axios
+    .request(config)
+    .then((response) => {
+      sendResponse(res, 200, response.data);
+    })
+    .catch((error) => {
+      sendResponse(res, error, [], "Informations not found");
+    });
+};
+
+const getRestrictions = async (req, res) => {
+  const { access_token } = await getToken();
+
+  const countryCode = req.body.country;
+  const cityCode = req.body.city;
+
+  const URL = cityCode
+    ? `https://test.api.amadeus.com/v2/duty-of-care/diseases/covid19-area-report?countryCode=${countryCode}&cityCode=${cityCode}&language=EN`
+    : `https://test.api.amadeus.com/v2/duty-of-care/diseases/covid19-area-report?countryCode=${countryCode}&language=EN`;
+
+  const config = {
+    method: "GET",
+    url: URL,
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  };
+
   await axios(config)
     .then((response) => {
       sendResponse(res, 200, response.data);
@@ -54,4 +82,5 @@ const getRestrictions = async (req, res) => {
 
 module.exports = {
   getRestrictions,
+  getIATACode,
 };

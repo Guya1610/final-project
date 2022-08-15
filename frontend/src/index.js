@@ -4,14 +4,16 @@ import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./components/Contexts/UserContext";
 import { StatsProvider } from "./components/Contexts/StatsContext";
-
+import { RestrictionsProvider } from "./components/Contexts/RestrictionsContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
     <StatsProvider>
       <UserProvider>
-        <App />
+        <RestrictionsProvider>
+          <App />
+        </RestrictionsProvider>
       </UserProvider>
     </StatsProvider>
   </React.StrictMode>

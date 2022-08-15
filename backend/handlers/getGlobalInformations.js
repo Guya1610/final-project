@@ -4,7 +4,7 @@ const axios = require("axios");
 const config = {
     method: 'get',
     url: 'https://api.covid19api.com/summary',
-    headers: { }
+    headers: {}
   };
 
 const getGlobalInformations = async (req, res) => {

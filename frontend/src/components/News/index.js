@@ -34,9 +34,9 @@ const News = () => {
                   {stat.NewConfirmed}
                 </Text>
                 <Text key={`deaths-${stat.Country}`}>
-                  Deaths:{stat.NewDeaths} -
+                  Deaths:{stat.NewDeaths}
                 </Text>
-              </div>
+              </div> 
             );
           })}
       </Marquee>
