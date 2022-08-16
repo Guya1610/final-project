@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import { RestrictionsContext } from "../Contexts/RestrictionsContext";
+import { UserContext } from "../Contexts/UserContext";
 import { useContext, useCallback, useEffect } from "react";
 import { debounce_leading } from "../../helper";
+import { FaStar } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa";
 
 const SearchEngine = () => {
   const {
     state: { restrictions, location, autoComplete },
     actions: { setStatus, setLocation, getRestrictions, getAutoComplete },
   } = useContext(RestrictionsContext);
+  const {
+    state: { watchlist },
+    actions: { updateWatchList },
+  } = useContext(UserContext);
 
   const handleSubmit = async (e, value) => {
     const restrictionsSearch = {
@@ -15,6 +22,7 @@ const SearchEngine = () => {
       country: value.address.countryCode,
     };
     e.preventDefault();
+    await setLocation({ location: value.name });
     await getRestrictions(restrictionsSearch);
   };
 
@@ -23,12 +31,19 @@ const SearchEngine = () => {
     location && getAutoComplete();
   }, [location]);
 
-  const handleChange = (e, key) => {
+  const handleChange = async (e, key) => {
     e.preventDefault();
-    setLocation({ [key]: e.target.value });
+    await setLocation({ [key]: e.target.value });
   };
 
   const optimizedCalling = useCallback(debounce_leading(handleChange), []);
+
+  const isSaved = (areaCode) => {
+    const issaved =
+      watchlist && watchlist.find((e) => e === areaCode) ? true : false;
+
+    return issaved;
+  };
 
   return (
     <Wrapper>
@@ -91,52 +106,71 @@ const SearchEngine = () => {
         </form>
       </WrapperForm>
       <WrapperResults>
-        <h2>
-          {location &&
-            location.location &&
-            "Travel restrictions for:" + location.location}
-        </h2>
+        {restrictions && (
+          <>
+            <div>
+              <h2>
+                {location &&
+                  location.location &&
+                  "Travel restrictions for: " + location.location}
+              </h2>
+              <button
+                onClick={() =>
+                  isSaved(restrictions.area.code)
+                    ? updateWatchList(restrictions.area.code, "remove")
+                    : updateWatchList(restrictions.area.code, "add")
+                }
+              >
+                {isSaved(restrictions.area.code) ? <FaStar /> : <FaRegStar />}
+              </button>
+            </div>
 
-        <div>
-          <h3>Summary</h3>
-          {restrictions && restrictions.summary.text}
-          <h3>Risk level</h3>
-          {restrictions && restrictions.diseaseRiskLevel.text}
-          <h3>Hotspots</h3>
-          {restrictions && restrictions.hotspots.text}
-          <h3>Area Restrictions</h3>
-          {restrictions &&
-            restrictions.areaRestrictions.map((restriction) => {
-              return <p>{restriction.text}</p>;
-            })}
-          <h3>Area Access Restriction</h3>
-          <h4>Entry:</h4>
-          {restrictions && restrictions.areaAccessRestriction.entry.text}
+            <div>
+              <h3>Summary</h3>
+              {restrictions && restrictions.summary.text}
+              <h3>Risk level</h3>
+              {restrictions && restrictions.diseaseRiskLevel.text}
+              <h3>Hotspots</h3>
+              {restrictions && restrictions.hotspots.text}
+              <h3>Area Restrictions</h3>
+              {restrictions &&
+                restrictions.areaRestrictions.map((restriction, index) => {
+                  return (
+                    <p key={"restriction-area-" + index}>{restriction.text}</p>
+                  );
+                })}
+              <h3>Area Access Restriction</h3>
+              <h4>Entry:</h4>
+              {restrictions && restrictions.areaAccessRestriction.entry.text}
 
-          <h4>Exit:</h4>
-          {restrictions && restrictions.areaAccessRestriction.exit.text}
+              <h4>Exit:</h4>
+              {restrictions && restrictions.areaAccessRestriction.exit.text}
 
-          <h4>Masks:</h4>
-          {restrictions && restrictions.areaAccessRestriction.masks.text}
+              <h4>Masks:</h4>
+              {restrictions && restrictions.areaAccessRestriction.masks.text}
 
-          <h4>transportation:</h4>
-          {restrictions &&
-            restrictions.areaAccessRestriction.transportation.text}
+              <h4>transportation:</h4>
+              {restrictions &&
+                restrictions.areaAccessRestriction.transportation.text}
 
-          <h4>travelQuarantineModality:</h4>
-          {restrictions &&
-            restrictions.areaAccessRestriction.travelQuarantineModality.text}
+              <h4>travelQuarantineModality:</h4>
+              {restrictions &&
+                restrictions.areaAccessRestriction.travelQuarantineModality
+                  .text}
 
-          <h4>travelTest:</h4>
-          {restrictions &&
-            "Required: " +
-              restrictions.areaAccessRestriction.travelTest.isRequired}
+              <h4>travelTest:</h4>
+              {restrictions &&
+                "Required: " +
+                  restrictions.areaAccessRestriction.travelTest.isRequired}
 
-          <h4>travelVaccination:</h4>
-          {restrictions &&
-            "Required: " +
-              restrictions.areaAccessRestriction.travelVaccination.isRequired}
-        </div>
+              <h4>travelVaccination:</h4>
+              {restrictions &&
+                "Required: " +
+                  restrictions.areaAccessRestriction.travelVaccination
+                    .isRequired}
+            </div>
+          </>
+        )}
       </WrapperResults>
     </Wrapper>
   );
@@ -147,7 +181,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 100vh;
   width: 100vw;
 `;
 const WrapperForm = styled.div`

@@ -49,8 +49,39 @@ const signInWithGoogle = async () => {
       };
 
       await addDoc(collection(db, "users"), newUser);
-      //update user state
+
+      const objectToSave = {
+        user_id: newUser.uid,
+        locations: [],
+      };
+
+      const params = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(objectToSave),
+      };
+      await fetch(`/api/watchlist`, params)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
     }
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "google",
+        email: user.email,
+      })
+    );
   } catch (err) {
     console.error(err);
   }
@@ -90,6 +121,7 @@ const sendPasswordReset = async (email) => {
 
 const logout = () => {
   signOut(auth);
+  localStorage.removeItem("user");
 };
 
 export {

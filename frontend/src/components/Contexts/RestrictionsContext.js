@@ -105,12 +105,10 @@ export const RestrictionsProvider = ({ children }) => {
     await fetch(`/api/restrictions`, requestOptions)
       .then((response) => response.json())
       .then((restrictions) => {
-        console.log(restrictions);
         setRestrictions(restrictions);
       })
       .catch((err) => {
-        console.log(err);
-        setStatus(500, err);
+        setStatus("error", err);
       });
   };
 

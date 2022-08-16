@@ -21,22 +21,24 @@ const News = () => {
       <Marquee
         gradient={false}
         style={{ overflowY: "hidden" }}
-        speed={1}
+        speed={5}
         loop={0}
       >
         {stats &&
           stats.map((stat) => {
             return (
-              <div key={`wrapper-${stat.Country}`}>
-                <Text key={`country-${stat.Country}`}>{stat.Country}:</Text>
-                <Text key={`active-${stat.Country}`}>
-                  Active:
-                  {stat.NewConfirmed}
-                </Text>
-                <Text key={`deaths-${stat.Country}`}>
-                  Deaths:{stat.NewDeaths}
-                </Text>
-              </div> 
+              stat.NewConfirmed > 0 && (
+                <div key={`wrapper-${stat.Country}`}>
+                  <Text key={`country-${stat.Country}`}>{stat.Country}:</Text>
+                  <Text key={`active-${stat.Country}`}>
+                    Active:
+                    {stat.NewConfirmed}
+                  </Text>
+                  <Text key={`deaths-${stat.Country}`}>
+                    Deaths:{stat.NewDeaths}
+                  </Text>
+                </div>
+              )
             );
           })}
       </Marquee>

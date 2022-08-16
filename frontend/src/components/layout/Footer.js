@@ -89,6 +89,7 @@ const Footer = () => {
 
 const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   align-content: center;
   justify-content: space-around;

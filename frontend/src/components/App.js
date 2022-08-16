@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
@@ -11,11 +11,22 @@ import Error from "../Error";
 import SearchEngine from "./SearchEngine";
 import History from "./History";
 import Map from "./Maps";
+import Profile from "./Profile";
 
 const App = () => {
   const {
     state: { user },
+    actions: { loginUser, getWatchList },
   } = useContext(UserContext);
+
+  useEffect(() => {
+    const isLogin = async () => {
+      const userLocalStorage = JSON.parse(window.localStorage.getItem("user"));
+      userLocalStorage && await loginUser({ user: userLocalStorage });
+      userLocalStorage && await getWatchList({ userId: userLocalStorage.uid });
+    };
+    isLogin();
+  }, []);
 
   return (
     <Wrapper>
@@ -27,8 +38,9 @@ const App = () => {
             <Route path="/search" element={<SearchEngine />} />
             <Route path="/history" element={<History />} />
             <Route path="/map" element={<Map />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/login" element={<Login userlog={user} loginUser={loginUser} />} />
             <Route exact path="/reset" element={<ResetPassword />} />
+            <Route exact path="/profile" element={<Profile />} />
           </Route>
           <Route exact path="*" element={<Error />} />
         </Routes>

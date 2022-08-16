@@ -11,7 +11,7 @@ app.use(require("./routes/login"));
 app.use(require("./routes/profile"));
 app.use(require("./routes/restrictions"));
 app.use(require("./routes/globalInformations"));
-
+app.use(require("./routes/userWatchList"));
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

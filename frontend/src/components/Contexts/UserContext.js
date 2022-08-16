@@ -4,6 +4,7 @@ export const UserContext = createContext(null);
 
 const initialState = {
   user: null,
+  watchlist: [],
   status: "loading",
 };
 
@@ -13,7 +14,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.user,
-        status: action.status,
+        status: "200",
       };
     }
     case "logout-user": {
@@ -21,6 +22,18 @@ const reducer = (state, action) => {
         ...state,
         user: null,
         status: action.status,
+      };
+    }
+    case "get-watchlist": {
+      return {
+        ...state,
+        watchlist: action.data.locations,
+      };
+    }
+    case "update-watchlist": {
+      return {
+        ...state,
+        watchlist: action.data.locations,
       };
     }
 
@@ -60,6 +73,64 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const getWatchList = async ( userId ) => {
+    const userIdSelected = state.user ? state.user.uid : userId && userId.userId;
+
+    await fetch(`/api/watchlist/${userIdSelected}`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "get-watchlist",
+          ...data,
+        });
+      })
+      .catch((error) => {
+        setStatus("error", error);
+      });
+  };
+
+  const updateWatchList = async (data, action) => {
+    const exist = state.watchlist.find((e) => e === data) ? true : false;
+
+    let objectToSave = exist
+      ? state.watchlist.filter((location) => {
+          return location !== data;
+        })
+      : [...state.watchlist, data];
+
+    const params = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:
+        objectToSave === undefined
+          ? JSON.stringify([])
+          : JSON.stringify(objectToSave),
+    };
+
+    state.user &&
+      state.watchlist &&
+      (await fetch(`/api/watchlist/${state.user.uid}`, params)
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch({
+            type: "update-watchlist",
+            data: { locations: objectToSave === undefined ? [] : objectToSave },
+          });
+        })
+        .catch((error) => {
+          setStatus("error", error);
+        }));
+  };
+
+  const createWatchList = (data) => {
+    dispatch({
+      type: "create-watchlist",
+      ...data,
+    });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -68,6 +139,9 @@ export const UserProvider = ({ children }) => {
           loginUser,
           logoutUser,
           setStatus,
+          createWatchList,
+          getWatchList,
+          updateWatchList,
         },
       }}
     >

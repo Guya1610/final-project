@@ -33,7 +33,6 @@ const getIATACode = async (req, res) => {
   const { access_token } = await getToken();
   const { search } = req.params;
   const { basesearch } = req.params;
-  console.log(basesearch);
   const config = {
     method: "get",
     url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=${

@@ -8,18 +8,17 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 
-const Login = () => {
+const Login = ({ userlog, loginUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
+    if (loading ) {
+      // navigate("/");
     }
-  }, [user, loading]);
+  }, [user]);
 
   return (
     <Wrapper>
@@ -47,6 +46,7 @@ const Login = () => {
           onClick={(e) => {
             e.preventDefault();
             signInWithGoogle();
+            loginUser({user: user});
           }}
         >
           Login with Google
@@ -56,7 +56,7 @@ const Login = () => {
           <Link to="/reset">Forgot Password</Link>
 
           <p>
-            Don't have an account? <Link to="/register">Registernow</Link>.
+            Don't have an account? <Link to="/register">Register Now</Link>.
           </p>
         </WrapperNotRegister>
       </WrapperForm>

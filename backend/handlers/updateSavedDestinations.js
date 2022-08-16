@@ -9,10 +9,9 @@ const options = {
   useUnifiedTopology: true,
 };
 
-// returns a destination by userId
-const getSavedDestinations = async (req, res) => {
+// return a destination list saved for one userId
+const updateSavedDestinations = async (req, res) => {
   const userId = req.params.userId;
-
   // creates a new client
   const client = new MongoClient(MONGO_URI, options);
   try {
@@ -21,10 +20,12 @@ const getSavedDestinations = async (req, res) => {
     // connect to the database
     const db = client.db("cov1dtravel");
     console.log("connected!");
-    const result = await db.collection("saved_destinations").findOne({ user_id: userId });
+    const result = await db
+      .collection("saved_destinations")
+      .updateOne({ user_id: userId }, { $set: { locations: req.body } });
     // on success
     if (result) {
-        sendResponse(res, 200, result);
+      sendResponse(res, 200, result);
     } else {
       // on failure
       sendResponse(res, 404, [], "user not found");
@@ -38,5 +39,5 @@ const getSavedDestinations = async (req, res) => {
 };
 
 module.exports = {
-    getSavedDestinations,
+  updateSavedDestinations,
 };

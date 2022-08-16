@@ -10,8 +10,8 @@ const options = {
 };
 
 // returns a destination by userId
-const getSavedDestinations = async (req, res) => {
-  const userId = req.params.userId;
+const createSavedDestinations = async (req, res) => {
+  const userId = req.body.user_id;
 
   // creates a new client
   const client = new MongoClient(MONGO_URI, options);
@@ -21,10 +21,12 @@ const getSavedDestinations = async (req, res) => {
     // connect to the database
     const db = client.db("cov1dtravel");
     console.log("connected!");
-    const result = await db.collection("saved_destinations").findOne({ user_id: userId });
+    const result = await db
+      .collection("saved_destinations")
+      .insertOne({ user_id: userId, locations: [] });
     // on success
     if (result) {
-        sendResponse(res, 200, result);
+      sendResponse(res, 200, result);
     } else {
       // on failure
       sendResponse(res, 404, [], "user not found");
@@ -38,5 +40,5 @@ const getSavedDestinations = async (req, res) => {
 };
 
 module.exports = {
-    getSavedDestinations,
+  createSavedDestinations,
 };
