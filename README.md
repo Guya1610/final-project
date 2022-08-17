@@ -2,6 +2,7 @@
 
 
 REQUIREMENTS ---------------------------------------------------------------------------------------------------------------
+
 two .env files are required to make website work :
 
 
@@ -11,21 +12,21 @@ two .env files are required to make website work :
 
 > get Amadeux Api credential: [https://developers.amadeus.com/self-service/category/covid-19-and-travel-safety/api-doc/travel-restrictions?s_kwcid=AL!10969!3!558841376826!p!!g!!travel%20restrictions%20api]
  
-  -MONGO_URI= 
-  -AMADEUS_API_KEY=""
-  -AMADEUS_API_SECRET=""
+  - MONGO_URI= 
+  - AMADEUS_API_KEY=""
+  - AMADEUS_API_SECRET=""
 
 --> add /frontend/.env:
 
 get Firebase Api credential: [https://firebase.google.com/]
 
--REACT_APP_FIREBASE_API_KEY = ""
--REACT_APP_FIREBASE_AUTH_DOMAIN = ""
--REACT_APP_FIREBASE_DATABASE_URL = ""
--REACT_APP_FIREBASE_PROJECT_ID = ""
--REACT_APP_FIREBASE_STORAGE_BUCKET = ""
--REACT_APP_FIREBASE_MESSAGING_SENDER_ID = ""
--REACT_APP_FIREBASE_APP_ID = ""
+- REACT_APP_FIREBASE_API_KEY = ""
+- REACT_APP_FIREBASE_AUTH_DOMAIN = ""
+- REACT_APP_FIREBASE_DATABASE_URL = ""
+- REACT_APP_FIREBASE_PROJECT_ID = ""
+- REACT_APP_FIREBASE_STORAGE_BUCKET = ""
+- REACT_APP_FIREBASE_MESSAGING_SENDER_ID = ""
+- REACT_APP_FIREBASE_APP_ID = ""
 
 Start Project -------------------------------------------------------------------------------------------------------------
 Launch commands project:
