@@ -5,7 +5,8 @@ import { useContext, useCallback, useEffect } from "react";
 import { debounce_leading } from "../../helper";
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
-
+import { MdSpaceDashboard } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 const SearchEngine = () => {
   const {
     state: { restrictions, location, autoComplete },
@@ -27,7 +28,6 @@ const SearchEngine = () => {
   };
 
   useEffect(() => {
-    // a condition may be added in case it shouldn't be executed every time
     location && getAutoComplete();
   }, [location]);
 
@@ -53,7 +53,7 @@ const SearchEngine = () => {
           Search by airport name or city name and learn more about restrictions
           and requirements for safely travel around the globe
         </p>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form>
           <div>
             <input
               type="radio"
@@ -108,22 +108,35 @@ const SearchEngine = () => {
       <WrapperResults>
         {restrictions && (
           <>
-            <div>
+            <WrapperHeader>
               <h2>
                 {location &&
                   location.location &&
                   "Travel restrictions for: " + location.location}
               </h2>
-              <button
-                onClick={() =>
-                  isSaved(restrictions.area.code)
-                    ? updateWatchList(restrictions.area.code, "remove")
-                    : updateWatchList(restrictions.area.code, "add")
-                }
-              >
-                {isSaved(restrictions.area.code) ? <FaStar /> : <FaRegStar />}
-              </button>
-            </div>
+              <div>
+                <button
+                  onClick={() =>
+                    isSaved(restrictions.area.code)
+                      ? updateWatchList(restrictions.area.code, "remove")
+                      : updateWatchList(restrictions.area.code, "add")
+                  }
+                >
+                  {isSaved(restrictions.area.code) ? (
+                    <>
+                      Saved <FaStar />
+                    </>
+                  ) : (
+                    <>
+                      Save <FaRegStar />
+                    </>
+                  )}
+                </button>
+                <NavLink to={`/dashboard/${restrictions.area.code}/${null}`}>
+                  <MdSpaceDashboard />
+                </NavLink>
+              </div>
+            </WrapperHeader>
 
             <div>
               <h3>Summary</h3>
@@ -132,38 +145,43 @@ const SearchEngine = () => {
               {restrictions && restrictions.diseaseRiskLevel.text}
               <h3>Hotspots</h3>
               {restrictions && restrictions.hotspots.text}
-              <h3>Area Restrictions</h3>
-              {restrictions &&
-                restrictions.areaRestrictions.map((restriction, index) => {
-                  return (
-                    <p key={"restriction-area-" + index}>{restriction.text}</p>
-                  );
-                })}
-              <h3>Area Access Restriction</h3>
-              <h4>Entry:</h4>
+
+              {restrictions && restrictions.areaRestrictions && (
+                <>
+                  <h3>Area Restrictions</h3>
+                  {restrictions.areaRestrictions.map((restriction, index) => {
+                    return (
+                      <p key={"restriction-area-" + index}>
+                        {restriction.text}
+                      </p>
+                    );
+                  })}
+                </>
+              )}
+              <h3>Entry:</h3>
               {restrictions && restrictions.areaAccessRestriction.entry.text}
 
-              <h4>Exit:</h4>
+              <h3>Exit:</h3>
               {restrictions && restrictions.areaAccessRestriction.exit.text}
 
-              <h4>Masks:</h4>
+              <h3>Masks:</h3>
               {restrictions && restrictions.areaAccessRestriction.masks.text}
 
-              <h4>transportation:</h4>
+              <h3>transportation:</h3>
               {restrictions &&
                 restrictions.areaAccessRestriction.transportation.text}
 
-              <h4>travelQuarantineModality:</h4>
+              <h3>travelQuarantineModality:</h3>
               {restrictions &&
                 restrictions.areaAccessRestriction.travelQuarantineModality
                   .text}
 
-              <h4>travelTest:</h4>
+              <h3>travelTest:</h3>
               {restrictions &&
                 "Required: " +
                   restrictions.areaAccessRestriction.travelTest.isRequired}
 
-              <h4>travelVaccination:</h4>
+              <h3>travelVaccination:</h3>
               {restrictions &&
                 "Required: " +
                   restrictions.areaAccessRestriction.travelVaccination
@@ -206,6 +224,15 @@ const WrapperForm = styled.div`
 `;
 
 const WrapperResults = styled.div``;
+
+const WrapperHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    outline: none;
+  }
+`;
 
 const WrapperSuggestions = styled.div`
   display: flex;

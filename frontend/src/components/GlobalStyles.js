@@ -36,8 +36,8 @@ export default createGlobalStyle`
 
     html, body, div,
     input, button, select, option,
-    h1, h2, h3, h4, h5, h6, p,
-    text,a {
+    h1, h2, h3, h4, h5, h6, p, svg,
+    text, a {
         font-family: var(--font-family);
         color: var(--font-color);
     }
@@ -136,5 +136,17 @@ export default createGlobalStyle`
 
     input {
         color: black;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background-color: var(--bg-color);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
     }
 `;

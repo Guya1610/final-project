@@ -33,11 +33,15 @@ const getIATACode = async (req, res) => {
   const { access_token } = await getToken();
   const { search } = req.params;
   const { basesearch } = req.params;
+
+  const URL =
+    basesearch == 0
+      ? `https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${search}`
+      : `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${search}`;
+      
   const config = {
     method: "get",
-    url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=${
-      basesearch === 0 ? `CITY` : `AIRPORT`
-    }&keyword=${search}`,
+    url: URL,
     headers: {
       Authorization: `Bearer ${access_token}`,
     },

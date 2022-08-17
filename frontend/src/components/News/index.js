@@ -31,7 +31,7 @@ const News = () => {
                 <div key={`wrapper-${stat.Country}`}>
                   <Text key={`country-${stat.Country}`}>{stat.Country}:</Text>
                   <Text key={`active-${stat.Country}`}>
-                    Active:
+                    New cases:
                     {stat.NewConfirmed}
                   </Text>
                   <Text key={`deaths-${stat.Country}`}>

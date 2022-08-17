@@ -4,6 +4,7 @@ import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { NavLink } from "react-router-dom";
 
 const Profile = () => {
   const redirectTo = useNavigate();
@@ -55,7 +56,11 @@ const Profile = () => {
         <h3>Favorites location</h3>
         {watchlist && watchlist.length > 0 ? (
           watchlist.map((location, index) => {
-            return <p key={`location-${index}`}>{location}</p>;
+            return (
+              <NavLink key={`location-${index}`} to={`/dashboard/${location}/null`}>
+                {location}
+              </NavLink>
+            );
           })
         ) : (
           <p>No location saved</p>
