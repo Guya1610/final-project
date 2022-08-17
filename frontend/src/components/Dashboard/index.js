@@ -21,11 +21,10 @@ const Dashboard = () => {
   } = useContext(RestrictionsContext);
 
   useEffect(() => {
-    !restrictions &&
-      getRestrictions({
-        city: city,
-        country: country,
-      });
+    getRestrictions({
+      city: city,
+      country: country,
+    });
   }, []);
   return (
     <Wrapper>

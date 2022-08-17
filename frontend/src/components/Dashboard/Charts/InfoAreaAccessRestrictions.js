@@ -85,7 +85,7 @@ const InfoAreaAccessRestrictions = ({ data }) => {
         <div>
           <h4>Mask</h4>
           <Text>Required: {data.masks.isRequired}</Text>
-          <Text>Decree: {data.masks.text}</Text>
+          <Text>Decree: {remove_html_tag(data.masks.text)}</Text>
           <Text>Last update: {data.masks.lastUpdate}</Text>
         </div>
 

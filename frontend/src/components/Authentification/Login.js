@@ -15,8 +15,8 @@ const Login = ({ userlog, loginUser }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading ) {
-      // navigate("/");
+    if (user ) {
+      navigate("/");
     }
   }, [user]);
 
