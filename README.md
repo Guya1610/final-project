@@ -1,20 +1,24 @@
 # final-project
 
 
-
+REQUIREMENTS ---------------------------------------------------------------------------------------------------------------
 two .env files are required to make website work :
-> get Amadeux Api credential: [https://developers.amadeus.com/self-service/category/covid-19-and-travel-safety/api-doc/travel-restrictions?s_kwcid=AL!10969!3!558841376826!p!!g!!travel%20restrictions%20api]
-> get MongoDB Api credential: [https://account.mongodb.com/]
+
+
 
 --> add /backend/.env
-MONGO_URI= 
-AMADEUS_API_KEY=""
-AMADEUS_API_SECRET=""
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+> get MongoDB Api credential: [https://account.mongodb.com/]
+
+> get Amadeux Api credential: [https://developers.amadeus.com/self-service/category/covid-19-and-travel-safety/api-doc/travel-restrictions?s_kwcid=AL!10969!3!558841376826!p!!g!!travel%20restrictions%20api]
+ 
+ 
+  MONGO_URI= 
+  AMADEUS_API_KEY=""
+  AMADEUS_API_SECRET=""
 
 --> add /frontend/.env:
-get Firebase Api credential: [https://firebase.google.com/]
 
+get Firebase Api credential: [https://firebase.google.com/]
 
 REACT_APP_FIREBASE_API_KEY = ""
 REACT_APP_FIREBASE_AUTH_DOMAIN = ""
@@ -23,14 +27,15 @@ REACT_APP_FIREBASE_PROJECT_ID = ""
 REACT_APP_FIREBASE_STORAGE_BUCKET = ""
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID = ""
 REACT_APP_FIREBASE_APP_ID = ""
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
+Start Project -------------------------------------------------------------------------------------------------------------
 Launch commands project:
 cd frontend && npm i && npm run start
 
 cd backend && npm i && npm run start:server
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
+
+COMPONENTS-----------------------------------------------------------------------------------------------------------------
 
 On the main page: 
 
