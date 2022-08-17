@@ -13,7 +13,7 @@ const SearchEngine = () => {
     actions: { setStatus, setLocation, getRestrictions, getAutoComplete },
   } = useContext(RestrictionsContext);
   const {
-    state: { watchlist },
+    state: { watchlist,user },
     actions: { updateWatchList },
   } = useContext(UserContext);
 
@@ -122,7 +122,7 @@ const SearchEngine = () => {
                       : updateWatchList(restrictions.area.code, "add")
                   }
                 >
-                  {isSaved(restrictions.area.code) ? (
+                  {user && isSaved(restrictions.area.code) ? (
                     <>
                       Saved <FaStar />
                     </>
